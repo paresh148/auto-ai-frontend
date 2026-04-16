@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -19,7 +19,6 @@ export class SignalTableComponent implements OnInit, OnDestroy {
   flashIds = new Set<string>();
   prices: Record<string, number> = {};
 
-  // Filters
   filterDirection = 'ALL';
   filterStrategy  = 'ALL';
   filterSize      = 'ALL';
@@ -28,7 +27,10 @@ export class SignalTableComponent implements OnInit, OnDestroy {
 
   private subs = new Subscription();
 
-  constructor(private signalService: SignalService) {}
+  constructor(
+    private signalService: SignalService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.subs.add(
@@ -36,18 +38,26 @@ export class SignalTableComponent implements OnInit, OnDestroy {
         this.allSignals = signals;
         this.buildStrategyList();
         this.applyFilters();
+        this.cdr.detectChanges();
       })
     );
 
     this.subs.add(
       this.signalService.newSignal$.subscribe(sig => {
         this.flashIds.add(sig.id);
-        setTimeout(() => this.flashIds.delete(sig.id), 3000);
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.flashIds.delete(sig.id);
+          this.cdr.detectChanges();
+        }, 3000);
       })
     );
 
     this.subs.add(
-      this.signalService.prices$.subscribe(p => this.prices = p)
+      this.signalService.prices$.subscribe(p => {
+        this.prices = p;
+        this.cdr.detectChanges();
+      })
     );
   }
 
@@ -90,7 +100,6 @@ export class SignalTableComponent implements OnInit, OnDestroy {
     return this.prices[ticker] ?? null;
   }
 
-  // Color coding: green if price is in trade's favor, red if against
   livePriceClass(sig: Signal): string {
     const p = this.getLivePrice(sig.ticker);
     if (p === null) return 'loading';

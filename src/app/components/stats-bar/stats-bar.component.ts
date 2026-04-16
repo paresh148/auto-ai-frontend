@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { SignalService } from '../../services/signal.service';
 import { SignalStats } from '../../models/signal.model';
 
@@ -10,23 +11,44 @@ import { SignalStats } from '../../models/signal.model';
   templateUrl: './stats-bar.component.html',
   styleUrls: ['./stats-bar.component.scss'],
 })
-export class StatsBarComponent implements OnInit {
+export class StatsBarComponent implements OnInit, OnDestroy {
   stats: SignalStats = { total: 0, buys: 0, sells: 0, aggressive: 0 };
   connected = false;
   currentTime = '';
-  private timer: any;
 
-  constructor(private signalService: SignalService) {}
+  private timer: any;
+  private subs = new Subscription();
+
+  constructor(
+    private signalService: SignalService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.signalService.stats$.subscribe(s => (this.stats = s));
-    this.signalService.connected$.subscribe(c => (this.connected = c));
+    this.subs.add(
+      this.signalService.stats$.subscribe(s => {
+        this.stats = s;
+        this.cdr.detectChanges();
+      })
+    );
+
+    this.subs.add(
+      this.signalService.connected$.subscribe(c => {
+        this.connected = c;
+        this.cdr.detectChanges();
+      })
+    );
+
     this.updateTime();
-    this.timer = setInterval(() => this.updateTime(), 1000);
+    this.timer = setInterval(() => {
+      this.updateTime();
+      this.cdr.detectChanges();
+    }, 1000);
   }
 
   ngOnDestroy() {
     clearInterval(this.timer);
+    this.subs.unsubscribe();
   }
 
   private updateTime() {
