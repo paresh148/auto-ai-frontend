@@ -23,6 +23,7 @@ export interface Signal {
   position_size: 'AGGRESSIVE' | 'NORMAL' | 'REDUCED';
 
   notes: string;
+  data_as_of: string;   // last candle time used to generate signal
 }
 
 export interface SignalStats {

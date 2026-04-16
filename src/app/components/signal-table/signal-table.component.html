@@ -52,12 +52,13 @@
           <th>T3 (1:4)</th>
           <th>SIZE</th>
           <th>CONFLUENCE</th>
+          <th>DATA AT</th>
           <th>NOTES</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngIf="filtered.length === 0">
-          <td colspan="14" class="empty">
+          <td colspan="15" class="empty">
             <div class="empty-state">
               <div class="empty-icon">📡</div>
               <div>Waiting for signals...</div>
@@ -111,6 +112,7 @@
             </div>
           </td>
 
+          <td class="time-cell" [title]="'Last candle: ' + sig.data_as_of">{{ sig.data_as_of || '—' }}</td>
           <td class="notes-cell" [title]="sig.notes">{{ sig.notes }}</td>
         </tr>
       </tbody>
