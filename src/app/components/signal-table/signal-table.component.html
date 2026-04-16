@@ -45,6 +45,7 @@
           <th>TF</th>
           <th>DIRECTION</th>
           <th>ENTRY</th>
+          <th>LIVE PRICE</th>
           <th>STOP LOSS</th>
           <th>RISK PTS</th>
           <th>T1 (1:2)</th>
@@ -58,7 +59,7 @@
       </thead>
       <tbody>
         <tr *ngIf="filtered.length === 0">
-          <td colspan="15" class="empty">
+          <td colspan="16" class="empty">
             <div class="empty-state">
               <div class="empty-icon">📡</div>
               <div>Waiting for signals...</div>
@@ -91,6 +92,9 @@
           </td>
 
           <td class="price-cell entry">{{ formatPrice(sig.entry) }}</td>
+          <td class="live-price-cell" [ngClass]="livePriceClass(sig)">
+            {{ getLivePrice(sig.ticker) !== null ? formatPrice(getLivePrice(sig.ticker)!) : '...' }}
+          </td>
           <td class="price-cell sl">{{ formatPrice(sig.stop_loss) }}</td>
           <td class="risk-cell">{{ riskPoints(sig) }}</td>
           <td class="price-cell t1">{{ formatPrice(sig.target_1) }}</td>

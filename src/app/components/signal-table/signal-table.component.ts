@@ -17,6 +17,7 @@ export class SignalTableComponent implements OnInit, OnDestroy {
   allSignals: Signal[] = [];
   filtered: Signal[] = [];
   flashIds = new Set<string>();
+  prices: Record<string, number> = {};
 
   // Filters
   filterDirection = 'ALL';
@@ -43,6 +44,10 @@ export class SignalTableComponent implements OnInit, OnDestroy {
         this.flashIds.add(sig.id);
         setTimeout(() => this.flashIds.delete(sig.id), 3000);
       })
+    );
+
+    this.subs.add(
+      this.signalService.prices$.subscribe(p => this.prices = p)
     );
   }
 
@@ -79,5 +84,18 @@ export class SignalTableComponent implements OnInit, OnDestroy {
 
   riskPoints(sig: Signal): string {
     return Math.abs(sig.entry - sig.stop_loss).toFixed(2);
+  }
+
+  getLivePrice(ticker: string): number | null {
+    return this.prices[ticker] ?? null;
+  }
+
+  // Color coding: green if price is in trade's favor, red if against
+  livePriceClass(sig: Signal): string {
+    const p = this.getLivePrice(sig.ticker);
+    if (p === null) return 'loading';
+    if (sig.direction === 'BUY')  return p >= sig.entry ? 'above' : 'below';
+    if (sig.direction === 'SELL') return p <= sig.entry ? 'above' : 'below';
+    return 'near';
   }
 }

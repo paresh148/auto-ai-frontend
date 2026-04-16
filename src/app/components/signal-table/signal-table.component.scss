@@ -8,14 +8,14 @@
 .filters {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
+  gap: 12px;
+  padding: 14px 20px;
   background: #0d1117;
   border-bottom: 1px solid #21262d;
   flex-shrink: 0;
 
   .filter-label {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 1px;
     color: #6e7681;
@@ -25,9 +25,9 @@
     background: #161b22;
     border: 1px solid #30363d;
     color: #c9d1d9;
-    padding: 5px 10px;
+    padding: 7px 12px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 13px;
     cursor: pointer;
     outline: none;
 
@@ -38,9 +38,9 @@
     background: #21262d;
     border: 1px solid #30363d;
     color: #8b949e;
-    padding: 5px 14px;
+    padding: 7px 16px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 13px;
     cursor: pointer;
 
     &:hover { background: #30363d; color: #c9d1d9; }
@@ -48,7 +48,7 @@
 
   .count {
     margin-left: auto;
-    font-size: 12px;
+    font-size: 13px;
     color: #6e7681;
   }
 }
@@ -63,7 +63,7 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 15px;
 
   thead tr {
     background: #161b22;
@@ -72,9 +72,9 @@ table {
     z-index: 10;
 
     th {
-      padding: 10px 12px;
+      padding: 12px 14px;
       text-align: left;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.8px;
       color: #6e7681;
@@ -92,12 +92,10 @@ table {
     &.buy-row  { border-left: 3px solid #238636; }
     &.sell-row { border-left: 3px solid #da3633; }
 
-    &.flash {
-      animation: flashAnim 3s ease-out;
-    }
+    &.flash { animation: flashAnim 3s ease-out; }
 
     td {
-      padding: 10px 12px;
+      padding: 12px 14px;
       color: #c9d1d9;
       vertical-align: middle;
       white-space: nowrap;
@@ -108,19 +106,21 @@ table {
 // ── Cell types ─────────────────────────────────────────────────────────────
 .time-cell {
   font-family: 'Courier New', monospace;
-  font-size: 12px;
+  font-size: 13px;
   color: #8b949e;
 }
 
 .name-cell {
   .name {
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 700;
     color: #e6edf3;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 }
 
 .strategy-cell {
+  font-size: 14px;
   font-weight: 500;
   color: #79c0ff;
 }
@@ -129,15 +129,16 @@ table {
   background: #0d1e2b;
   color: #79c0ff;
   border: 1px solid #1f6feb;
-  padding: 2px 8px;
+  padding: 3px 10px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
 }
 
 .price-cell {
   font-family: 'Courier New', monospace;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
 
   &.entry { color: #e6edf3; }
   &.sl    { color: #f85149; }
@@ -146,8 +147,20 @@ table {
   &.t3    { color: #3fb950; }
 }
 
+.live-price-cell {
+  font-family: 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+
+  &.above { color: #3fb950; }
+  &.below { color: #f85149; }
+  &.near  { color: #e6edf3; }
+  &.loading { color: #484f58; font-size: 13px; }
+}
+
 .risk-cell {
   font-family: 'Courier New', monospace;
+  font-size: 14px;
   color: #e3b341;
 }
 
@@ -157,11 +170,11 @@ table {
 }
 
 .notes-cell {
-  max-width: 180px;
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   color: #8b949e;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 // ── Empty state ─────────────────────────────────────────────────────────────
@@ -171,10 +184,10 @@ table {
   color: #6e7681;
 
   .empty-icon { font-size: 48px; margin-bottom: 12px; }
-  font-size: 14px;
+  font-size: 15px;
 
   .empty-sub {
-    font-size: 12px;
+    font-size: 13px;
     margin-top: 8px;
     color: #484f58;
     max-width: 400px;
