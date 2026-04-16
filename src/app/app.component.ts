@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @Component({
@@ -10,4 +10,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     :host { display: block; height: 100vh; }
   `]
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  ngOnInit() {
+    // Auto-reload every 30 seconds to ensure latest signals are visible
+    setInterval(() => window.location.reload(), 30000);
+  }
+}
