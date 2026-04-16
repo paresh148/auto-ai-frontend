@@ -1,0 +1,34 @@
+<div class="stats-bar">
+  <div class="brand">
+    <span class="logo">⚡</span>
+    <span class="title">AUTO AI</span>
+    <span class="subtitle">Signal Dashboard</span>
+  </div>
+
+  <div class="stat-cards">
+    <div class="stat-card total">
+      <span class="label">TOTAL SIGNALS</span>
+      <span class="value">{{ stats.total }}</span>
+    </div>
+    <div class="stat-card buy">
+      <span class="label">BUY</span>
+      <span class="value">{{ stats.buys }}</span>
+    </div>
+    <div class="stat-card sell">
+      <span class="label">SELL</span>
+      <span class="value">{{ stats.sells }}</span>
+    </div>
+    <div class="stat-card agg">
+      <span class="label">AGGRESSIVE</span>
+      <span class="value">{{ stats.aggressive }}</span>
+    </div>
+  </div>
+
+  <div class="right-info">
+    <div class="clock">{{ currentTime }}</div>
+    <div class="connection" [class.connected]="connected" [class.disconnected]="!connected">
+      <span class="dot"></span>
+      {{ connected ? 'LIVE' : 'CONNECTING...' }}
+    </div>
+  </div>
+</div>
